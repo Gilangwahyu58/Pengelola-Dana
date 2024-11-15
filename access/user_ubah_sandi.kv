@@ -59,6 +59,7 @@
                     text_size: self.size
                     padding: 10
                     background_normal: ''
+                    password: True
                 Label:
                     text: 'Kata Sandi Baru'
                     font_size: 14
@@ -79,6 +80,7 @@
                     text_size: self.size
                     padding: 10
                     background_normal: ''
+                    password: True
                 Label:
                     text: 'Konfirmasi Kata Sandi'
                     font_size: 14
@@ -99,9 +101,37 @@
                     text_size: self.size
                     padding: 10
                     background_normal: ''
+                    password: True
                 Label:
                     size_hint_y: None
                     height: 30  # Garis pemisah
+                # Checkbox untuk lihat kata sandi
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: None
+                    height: 20
+                    spacing: 5
+                    pos_hint: {"right": 1}
+
+                    CheckBox:
+                        id: lihat_kata_sandi
+                        on_active: 
+                            kata_sandi_lama.password = not self.active  
+                            kata_sandi_baru.password = not self.active  
+                            konfirmasi_kata_sandi.password = not self.active 
+                        color: 0, 0, 0, 1
+                        size_hint: (None, None)
+                        size: (20, 20)
+
+                    Label:
+                        text: "Lihat kata sandi"
+                        font_size: '14sp'
+                        color: 0, 0, 0, 1
+                        size_hint_x: None
+                        width: 100
+                Label:
+                    size_hint_y: None
+                    height: 10  # Garis pemisah
                 Button:
                     text: 'Simpan'
                     size_hint_y: None
