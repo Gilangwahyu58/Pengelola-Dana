@@ -1,0 +1,197 @@
+<BuatAkunScreen>:
+    FloatLayout:
+        Image:
+            source: 'assets/image/bgabu.png'  # Ganti dengan path gambar latar belakang Anda
+            allow_stretch: True  # Membuat gambar bisa meregang sesuai ukuran
+            keep_ratio: False  # Menjaga rasio gambar
+            size_hint: 1, 1  # Mengisi seluruh layar
+            pos_hint: {'x': 0, 'y': 0}
+            opacity: 0.6
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [20, 20, 20, 20]
+        spacing: 15
+
+        Label:
+            text: "Buat Akun Baru"
+            font_size: '30sp'
+            color: 0, 0, 0, 1
+            bold: True
+            font_name: 'assets/font/raidercrusader.ttf'
+            size_hint_y: None
+            height: 50
+            pos_hint: {"center_x": 0.5}
+
+        # Input Fields
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: 300  # Meningkatkan tinggi BoxLayout untuk memberikan ruang lebih
+
+            # Input Nama Lengkap
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: 60
+
+                Label:
+                    text: "Nama Lengkap"
+                    size_hint_y: None
+                    height: 30
+                    color: 0, 0, 0, 1
+                    halign: 'left'
+                    text_size: self.width, None
+                    size_hint_x: None
+                    width: 150
+
+                TextInput:
+                    id: nama_lengkap
+                    size_hint_y: None
+                    height: 30
+                    multiline: False
+                    background_color: 1, 1, 1, 0
+                    foreground_color: 0, 0, 0, 1
+                    padding_y: [5, 5]
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 1
+                        Line:
+                            width: 1.2
+                            points: [self.x, self.y, self.x + self.width, self.y]
+
+            # Input Nama Pengguna
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: 60
+
+                Label:
+                    text: "Nama Pengguna"
+                    size_hint_y: None
+                    height: 30
+                    color: 0, 0, 0, 1
+                    halign: 'left'
+                    text_size: self.width, None
+                    size_hint_x: None
+                    width: 150
+
+                TextInput:
+                    id: username
+                    size_hint_y: None
+                    height: 30
+                    multiline: False
+                    background_color: 1, 1, 1, 0
+                    foreground_color: 0, 0, 0, 1
+                    padding_y: [5, 5]
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 1
+                        Line:
+                            width: 1.2
+                            points: [self.x, self.y, self.x + self.width, self.y]
+
+            # Input No Telepon
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: 60
+
+                Label:
+                    text: "No Telepon"
+                    size_hint_y: None
+                    height: 30
+                    color: 0, 0, 0, 1
+                    halign: 'left'
+                    text_size: self.width, None
+                    size_hint_x: None
+                    width: 150
+
+                TextInput:
+                    id: no_telepon
+                    size_hint_y: None
+                    height: 30
+                    multiline: False
+                    background_color: 1, 1, 1, 0
+                    foreground_color: 0, 0, 0, 1
+                    padding_y: [5, 5]
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 1
+                        Line:
+                            width: 1.2
+                            points: [self.x, self.y, self.x + self.width, self.y]
+
+            # Input Kata Sandi
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: 60
+
+                Label:
+                    text: "Kata Sandi"
+                    size_hint_y: None
+                    height: 30
+                    color: 0, 0, 0, 1
+                    halign: 'left'
+                    text_size: self.width, None
+                    size_hint_x: None
+                    width: 150
+
+                TextInput:
+                    id: kata_sandi
+                    size_hint_y: None
+                    height: 30
+                    multiline: False
+                    password: not lihat_kata_sandi.active  # Mengatur visibilitas kata sandi
+                    background_color: 1, 1, 1, 0
+                    foreground_color: 0, 0, 0, 1
+                    padding_y: [5, 5]
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 1
+                        Line:
+                            width: 1.2
+                            points: [self.x, self.y, self.x + self.width, self.y]
+
+            # Checkbox untuk lihat kata sandi
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint_y: None
+                height: 20
+                spacing: 5
+                pos_hint: {"right": 1}
+
+                CheckBox:
+                    id: lihat_kata_sandi
+                    on_active: kata_sandi.password = not self.active  # Mengatur visibilitas kata sandi
+                    color: 0, 0, 0, 1
+                    size_hint: (None, None)
+                    size: (20, 20)
+
+                Label:
+                    text: "Lihat kata sandi"
+                    font_size: '14sp'
+                    color: 0, 0, 0, 1
+                    size_hint_x: None
+                    width: 100
+
+        Button:
+            text: "Buat Akun"
+            size_hint_y: None
+            height: 50
+            background_color: 0.2, 0.6, 0.8, 1
+            color: 1, 1, 1, 1
+            bold: True
+            pos_hint: {"center_x": 0.5, "center_y": 0.1}
+            on_press: root.buat_akun()  # Panggil method untuk memeriksa input
+        
+        Button:
+            text: "Sudah punya akun? Login"
+            size_hint_y: None
+            height: 50
+            background_color: 0.2, 0.6, 0.8, 1
+            color: 1, 1, 1, 1
+            bold: True
+            pos_hint: {"center_x": 0.5, "center_y": 0.05}
+            on_press: app.root.current = 'login'
+          

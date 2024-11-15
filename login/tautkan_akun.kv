@@ -1,0 +1,157 @@
+<TautkanAkunScreen>:
+    FloatLayout:
+        Image:
+            source: 'assets/image/bgabu.png'  # Ganti dengan path gambar latar belakang Anda
+            allow_stretch: True  # Membuat gambar bisa meregang sesuai ukuran
+            keep_ratio: False  # Menjaga rasio gambar
+            size_hint: 1, 1  # Mengisi seluruh layar
+            pos_hint: {'x': 0, 'y': 0}
+            opacity: 0.6
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [20, 20, 20, 20]
+        spacing: 15
+
+        Label:
+            text: "Tautkan Akun"
+            font_size: '30sp'
+            color: 0, 0, 0, 1
+            bold: True
+            font_name: 'assets/font/raidercrusader.ttf'
+            size_hint_y: None
+            height: 50
+            pos_hint: {"center_x": 0.5}  # Posisikan label lebih tinggi
+
+        Label:
+            text: "Dengan Desa"
+            font_size: '30sp'
+            color: 0, 0, 0, 1
+            bold: True
+            font_name: 'assets/font/raidercrusader.ttf'
+            size_hint_y: None
+            height: 50
+            pos_hint: {"center_x": 0.5}
+        # Input Fields
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: 60  # Meningkatkan tinggi BoxLayout untuk memberikan ruang lebih
+
+        # Spinner dengan penyesuaian tampilan
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: 60
+            Label:
+                text: "Pilih Desa"
+                size_hint_y: None
+                height: 30
+                color: 0, 0, 0, 1
+                halign: 'left'  # Mengatur teks untuk rata kiri
+                text_size: self.width, None  # Memungkinkan teks untuk membungkus
+                size_hint_x: None  # Mengatur lebar label
+                width: 150  # Atur lebar label sesuai kebutuhan
+            Spinner:
+                id: desa_spinner
+                text: '---Pilih Desa---'
+                values: []
+                size_hint: (1, None)  # Lebar spinner 80% dari lebar layar
+                height: 30  # Ukuran tinggi spinner lebih kecil
+                background_color: 1, 1, 1, 0  # Latar belakang transparan
+                color: 0, 0, 0, 1  # Warna teks hitam saat dipilih
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 1  # Garis hitam
+                    Line:
+                        width: 1.2
+                        points: [self.x, self.y, self.x + self.width, self.y]
+
+                on_text: self.color = (0, 0, 0, 1)  # Mengatur warna teks hitam saat dipilih
+                on_release: self.color = (0, 0, 0, 0.5)  # Mengatur warna teks transparan saat ditampilkan
+
+        # Input NIK
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: 60
+            
+            Label:
+                text: "NIK"
+                size_hint_y: None
+                height: 30
+                color: 0, 0, 0, 1
+                halign: 'left'  # Mengatur teks untuk rata kiri
+                text_size: self.width, None  # Memungkinkan teks untuk membungkus
+                size_hint_x: None  # Mengatur lebar label
+                width: 150  # Atur lebar label sesuai kebutuhan
+
+            TextInput:
+                id: nik
+                multiline: False
+                size_hint_y: None  # Lebar input 80% dari lebar layar
+                height: 30  # Ukuran tinggi TextInput lebih kecil
+                background_color: 1, 1, 1, 0  # Latar belakang transparan
+                padding_y: [5, 5]
+                foreground_color: 0, 0, 0, 1  # Warna teks hitam
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 1  # Garis hitam
+                    Line:
+                        width: 1.2  # Garis lebih tebal
+                        points: [self.x, self.y, self.x + self.width, self.y]
+
+        # Input NO KK
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: 60
+            
+            Label:
+                text: "No. KK"
+                size_hint_y: None
+                height: 30
+                color: 0, 0, 0, 1
+                halign: 'left'  # Mengatur teks untuk rata kiri
+                text_size: self.width, None  # Memungkinkan teks untuk membungkus
+                size_hint_x: None  # Mengatur lebar label
+                width: 150  # Atur lebar label sesuai kebutuhan
+
+            TextInput:
+                id: no_kk
+                multiline: False
+                size_hint_y: None  # Lebar input 80% dari lebar layar
+                height: 30  # Ukuran tinggi TextInput lebih kecil
+                pos_hint: {"center_x": 0.5, "center_y": 0.20}  # Posisikan di tengah
+                background_color: 1, 1, 1, 0  # Latar belakang transparan
+                padding_y: [5, 5]
+                foreground_color: 0, 0, 0, 1  # Warna teks hitam
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 1  # Garis hitam
+                    Line:
+                        width: 1.2  # Garis lebih tebal
+                        points: [self.x, self.y, self.x + self.width, self.y]
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, None)  # Lebar BoxLayout 80% dari lebar layar
+            height: 50
+            spacing: 10
+            pos_hint: {"center_x": 0.5, "center_y": 0.08}  # Posisikan BoxLayout di tengah
+
+            Button:
+                text: "Kirim"
+                size_hint: (0.5, 1)  # Lebar tombol kirim 50% dari BoxLayout
+                background_color: 0.2, 0.6, 0.8, 1
+                color: 1, 1, 1, 1
+                bold: True
+                on_press: root.kirim()
+
+            Button:
+                text: "Kembali"
+                size_hint: (0.5, 1)  # Lebar tombol kembali 50% dari BoxLayout
+                background_color: 0.2, 0.6, 0.8, 1
+                color: 1, 1, 1, 1
+                bold: True
+                on_press: app.root.current = 'buat_akun'  # Ganti dengan halaman yang diinginkan
+

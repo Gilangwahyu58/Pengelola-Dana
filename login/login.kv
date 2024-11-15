@@ -1,0 +1,156 @@
+<LoginScreen>:
+    FloatLayout:
+        Image:
+            source: 'assets/image/bgabu.png'  # Ganti dengan path gambar latar belakang Anda
+            allow_stretch: True  # Membuat gambar bisa meregang sesuai ukuran
+            keep_ratio: False  # Menjaga rasio gambar
+            size_hint: 1, 1  # Mengisi seluruh layar
+            pos_hint: {'x': 0, 'y': 0}
+            opacity: 0.6
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [20, 20, 20, 20]
+        spacing: 15
+
+        Image:
+            source: 'assets/image/logo.png'  # Letakkan gambar logo di folder login
+            size_hint_y: None
+            height: 100
+            allow_stretch: True
+            keep_ratio: True
+            pos_hint: {"center_x": 0.5, "top": 0.7}
+
+        Label:
+            text: "SELAMAT DATANG"
+            font_size: '35sp'
+            color: 0.2, 0.6, 0.8, 1
+            bold: True
+            size_hint_y: None
+            height: 50
+            font_name: 'assets/font/raidercrusader.ttf'
+
+        Label:
+            text: "Silakan login terlebih dahulu"
+            font_size: '18sp'
+            color: 0, 0, 0, 1
+            bold: True
+            size_hint_y: None
+            height: 20
+            font_name: 'assets/font/raidercrusader.ttf'
+
+        # Input Fields
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: 180  # Meningkatkan tinggi BoxLayout untuk memberikan ruang lebih
+
+            # Input Nama Pengguna
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: 60
+
+                Label:
+                    text: "Nama Pengguna"
+                    size_hint_y: None
+                    height: 30
+                    color: 0, 0, 0, 1
+                    halign: 'left'  # Mengatur teks untuk rata kiri
+                    text_size: self.width, None  # Memungkinkan teks untuk membungkus
+                    size_hint_x: None  # Mengatur lebar label
+                    width: 150  # Atur lebar label sesuai kebutuhan
+
+                TextInput:
+                    id: username
+                    size_hint_y: None
+                    height: 30
+                    multiline: False
+                    background_color: 1, 1, 1, 0  # Latar belakang transparan
+                    foreground_color: 0, 0, 0, 1  # Warna teks hitam
+                    padding_y: [5, 5]
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 1  # Garis hitam
+                        Line:
+                            width: 1.2
+                            points: [self.x, self.y, self.x + self.width, self.y]  # Garis bawah
+
+            # Input Kata Sandi
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: 60
+
+                Label:
+                    text: "Kata Sandi"
+                    size_hint_y: None
+                    height: 30
+                    color: 0, 0, 0, 1
+                    halign: 'left'  # Mengatur teks untuk rata kiri
+                    text_size: self.width, None  # Memungkinkan teks untuk membungkus
+                    size_hint_x: None  # Mengatur lebar label
+                    width: 150  # Atur lebar label sesuai kebutuhan
+
+                TextInput:
+                    id: kata_sandi
+                    size_hint_y: None
+                    height: 30
+                    multiline: False
+                    password: True
+                    background_color: 1, 1, 1, 0  # Latar belakang transparan
+                    foreground_color: 0, 0, 0, 1  # Warna teks hitam
+                    padding_y: [5, 5]
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 1  # Garis hitam
+                        Line:
+                            width: 1.2
+                            points: [self.x, self.y, self.x + self.width, self.y]  # Garis bawah
+
+        # Checkbox untuk lihat kata sandi
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 20
+            spacing: 5  # Jarak antar elemen
+            pos_hint: {"right": 1}  # Memindahkan ke kanan
+
+            CheckBox:
+                id: lihat_kata_sandi
+                on_active: kata_sandi.password = not self.active
+                color: 0, 0, 0, 1  # Warna checkbox hitam
+                size_hint: (None, None)
+                size: (20, 20)  # Ukuran checkbox lebih besar
+
+            Label:
+                text: "Lihat kata sandi"
+                font_size: '14sp'
+                color: 0, 0, 0, 1
+                size_hint_x: None
+                width: 100
+
+        # Tombol Login dan Buat Akun
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 50
+            spacing: 10
+            pos_hint: {'center_x': 0.5, "center_y": 0.10}
+
+            Button:
+                text: "Login"
+                size_hint_x: 0.4
+                background_color: 0.2, 0.6, 0.8, 1
+                color: 1, 1, 1, 1
+                bold: True
+                on_press: root.login()
+
+            Button:
+                text: "Buat Akun"
+                size_hint_x: 0.4
+                background_color: 0.2, 0.6, 0.8, 1
+                color: 1, 1, 1, 1
+                bold: True
+                on_press: app.root.current = 'buat_akun'
+
+   
