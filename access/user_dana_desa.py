@@ -58,7 +58,7 @@ class UserDanaDesaScreen(Screen):
         """Memuat data keuangan dari database."""
         try:
             keuangan_data = Penggunaan.get_keuangan_data(nama_desa)
-            total_keuangan = keuangan_data.get('financial_amount', 0) if keuangan_data else 0
+            total_keuangan = keuangan_data.get('total_keuangan', 0) if keuangan_data else 0
             self.ids.keuangan_input.text = f'Total Keuangan Desa: Rp {total_keuangan:,}'  # Memperbarui teks label
             self.update_sisa_dana()  # Hitung sisa dana saat memuat data keuangan
         except Exception as e:
