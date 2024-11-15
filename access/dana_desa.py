@@ -8,6 +8,11 @@ from kivymd.uix.boxlayout import MDBoxLayout
 from kivy.clock import Clock
 
 class DanaDesaScreen(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.total_keuangan = 0  # Inisialisasi total keuangan
+        self.keuangan_input_event = None  # Menyimpan event untuk debounce
+
     def on_enter(self):
         """Method ini dipanggil ketika layar ini ditampilkan."""
         try:
@@ -17,8 +22,8 @@ class DanaDesaScreen(Screen):
             self.load_keuangan_data(self.nama_desa)  # Panggil metode untuk memuat data keuangan
             
             # Bind event untuk mengupdate sisa dana saat input keuangan berubah
-            self.ids.keuangan_input.bind(on_text_validate=self.update_sisa_dana)
-            self.ids.keuangan_input.bind(text=self.update_sisa_dana)
+            
+            self.ids.keuangan_input.bind(text=self.on_keuangan_input_change)
         except Exception as e:
             print(f"Error saat memasuki layar: {e}")
 
@@ -62,29 +67,56 @@ class DanaDesaScreen(Screen):
         try:
             keuangan_data = Penggunaan.get_keuangan_data(nama_desa)
             if keuangan_data:
-                self.ids.keuangan_input.text = str(keuangan_data.get('financial_amount', 0))
+                self.total_keuangan = keuangan_data.get('total_keuangan', 0)  # Ambil total keuangan dari Firebase
+                self.ids.keuangan_input.text = str(self.total_keuangan)
+                self.ids.total_keuangan.text = f'Total Keuangan Desa: Rp {self.total_keuangan:,}'  # Update label
+                self.draw_horizontal_line()
             else:
                 self.ids.keuangan_input.text = "0"  # Set default jika tidak ada data
+                self.ids.total_keuangan.text = 'Total Keuangan Desa: Rp 0'  # Update label
             self.update_sisa_dana()  # Hitung sisa dana saat memuat data keuangan
         except Exception as e:
             print(f"Error saat memuat data keuangan: {e}")
 
+    def on_keuangan_input_change(self, instance, value):
+        """Mengupdate sisa dana saat input keuangan berubah."""
+        if self.keuangan_input_event:
+            self.keuangan_input_event.cancel()  # Batalkan event sebelumnya jika ada
+        self.keuangan_input_event = Clock.schedule_once(self.update_sisa_dana, 0.5)  # Tunggu 0.5 detik
+
+    def add_keuangan(self):
+        """Menambahkan dana ke total keuangan desa dan menyimpannya ke Firebase."""
+        try:
+            tambahan_keuangan = int(self.ids.keuangan_input.text)
+            if tambahan_keuangan <= 0:
+                raise ValueError("Jumlah harus lebih dari 0.")  # Validasi jika jumlah tidak valid
+            
+            # Simpan ke Firebase
+            Penggunaan.save_keuangan_data(self.nama_desa, tambahan_keuangan)  # Simpan ke Firebase
+            
+            self.total_keuangan += tambahan_keuangan  # Tambahkan ke total
+            self.ids.keuangan_input.text = '0'  # Reset input setelah menambah
+            self.update_sisa_dana()  # Perbarui sisa dana
+            self.show_popup(f"Keuangan desa berhasil ditambahkan: Rp {tambahan_keuangan:,}")
+        except ValueError as ve:
+            print(f"Input tidak valid: {ve}")
+        except Exception as e:
+            print(f"Error saat menambahkan keuangan: {e}")
     def update_sisa_dana(self, *args):
         """Menghitung dan memperbarui sisa dana berdasarkan input keuangan dan total penggunaan."""
         try:
             total_penggunaan = sum(item['jumlah'] for item in Penggunaan.get_penggunaan_data(self.nama_desa))
-            keuangan_input = int(self.ids.keuangan_input.text)
-            sisa_dana = keuangan_input - total_penggunaan
+            sisa_dana = self.total_keuangan - total_penggunaan
             self.ids.sisa.text = f'Keuangan Desa yang tersisa: Rp {sisa_dana:,}'
         except ValueError:
-            self.ids.sisa.text = 'Keuangan Desa yang tersisa: Rp 0'  # Reset jika input tidak valid
-            print("Input keuangan tidak valid.")
-
+            self.ids.sisa.text = 'Keuangan Desa yang tersisa: Rp 0'
     def save_financial_data(self):
         """Menyimpan data keuangan desa ke Firebase."""
         try:
             keuangan_input = int(self.ids.keuangan_input.text)
             Penggunaan.save_keuangan_data(self.nama_desa, keuangan_input)  # Simpan ke Firebase
+            self.total_keuangan += keuangan_input  # Update total keuangan lokal
+            self.ids.total_keuangan.text = f'Total Keuangan Desa: Rp {self.total_keuangan:,}'  # Update label
             print("Data keuangan berhasil disimpan.")
             self.update_sisa_dana()  # Update sisa dana setelah menyimpan
             self.show_popup("Keuangan desa berhasil diperbarui!")  # Tampilkan popup
