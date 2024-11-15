@@ -1,0 +1,38 @@
+#:kivy 2.0.0
+<SplashScreen>:
+    FloatLayout:
+        Image:
+            source: 'assets/image/bgabu.png'  # Ganti dengan path gambar latar belakang Anda
+            allow_stretch: True  # Membuat gambar bisa meregang sesuai ukuran
+            keep_ratio: False  # Menjaga rasio gambar
+            size_hint: 1, 1  # Mengisi seluruh layar
+            pos_hint: {'x': 0, 'y': 0}
+
+        Image:
+            source: 'assets/image/logo.png'  # Ganti dengan path logo Anda
+            size_hint: None, None
+            size: 180, 180  # Sesuaikan ukuran logo
+            pos_hint: {'center_x': 0.5, 'center_y': 0.6}  # Posisi logo di tengah atas
+
+        Label:
+            text: 'Pengelola Dana Desa'
+            font_size: 24
+            color: 0, 0, 0, 1
+            halign: 'center'
+            valign: 'middle'
+            size_hint_y: None
+            height: 50
+            pos_hint: {'center_x': 0.5, 'center_y': 0.4}  # Posisi label di tengah bawah logo
+            font_name: 'assets/font/raidercrusader.ttf'
+
+        Label:
+            text: ''
+            height: 50
+
+        MDSpinner:
+            id: spinner
+            size_hint: None, None
+            color: 0.05, 0.5, 1, 1
+            size: dp(40), dp(40)  # Ukuran spinner
+            pos_hint: {'center_x': 0.5, 'center_y': 0.2}  # Posisi spinner di tengah bawah
+            active: True  # Aktifkan spinner

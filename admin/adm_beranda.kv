@@ -1,0 +1,248 @@
+<AdmBerandaScreen>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        # Top Layout
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 80
+            padding: 10
+            spacing: 10
+
+            Image:
+                source: 'assets/image/logo.png'
+                size_hint: 0.3, 1
+                allow_stretch: True
+
+            BoxLayout:
+                orientation: 'vertical'
+                padding: 5
+                size_hint_x: 0.7
+
+                Label:
+                    text: 'Selamat Datang di'
+                    font_size: 20
+                    color: 0, 0, 0, 1
+                    size_hint_y: None
+                    height: 30
+                    font_name: 'assets/font/raidercrusader.ttf'
+
+                Label:
+                    text: 'Pengelola Dana Desa'
+                    font_size: 22
+                    color: 0, 0, 0, 1
+                    size_hint_y: None
+                    height: 30
+                    font_name: 'assets/font/raidercrusader.ttf'
+
+        # Middle Layout (ScrollView)
+        ScrollView:
+            size_hint: 1, None
+            size: 350, 470
+
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+
+                Image:
+                    source: 'assets/image/img1.jpg'
+                    allow_stretch: True
+                    keep_ratio: False
+                    size_hint_y: None
+                    height: 150
+
+                Label:
+                    text: ''
+                    size_hint_y: None
+                    height: 40
+
+                Label:
+                    text: 'Perangkat Desa'
+                    font_size: 16
+                    size_hint_y: None
+                    height: 30
+                    color: 0, 0, 0, 1
+                    font_name: 'assets/font/raidercrusader.ttf'
+
+                GridLayout:
+                    id: anggota_grid
+                    cols: 5
+                    size_hint_y: None
+                    height: self.minimum_height 
+                    padding: 5
+                    spacing: 10
+                Label:
+                    text: ''
+                    size_hint_y: None
+                    height: 20
+                Label:
+                    text: 'Lokasi'
+                    font_size: 16
+                    size_hint_y: None
+                    height: 30
+                    color: 0, 0, 0, 1
+                    font_name: 'assets/font/raidercrusader.ttf'
+                Label:
+                    text: ''
+                    size_hint_y: None
+                    height: 20
+                Button:
+                    text: '---Klik Untuk Melihat Lokasi---'
+                    background_color: (1, 1, 1, 0)  # Warna latar belakang transparan
+                    color: (0, 0, 0, 1)  # Warna teks 
+                    font_size: 12
+                    size_hint_y: None  # Sesuaikan ukuran tombol dengan ukuran gambar
+                    height: 30
+                    bold: True
+                    on_press: root.on_image_click()  # Panggilan fungsi ketika tombol ditekan
+                Image:
+                    source: 'assets/image/map1.jpg'
+                    allow_stretch: True
+                    keep_ratio: False
+                    size_hint_y: None
+                    height: 150
+        # Bottom Navigation
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: 50
+            padding: 5
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint: (None, 1)
+                width: self.parent.width / 4 
+                FloatLayout:
+                    # Gambar di bagian atas
+                    Image:
+                        source: 'assets/image/icon_beranda.png'
+                        size_hint: 1, 0.5  # Ukuran gambar disesuaikan
+                        allow_stretch: True
+                        keep_ratio: True
+                        pos_hint: {'center_x': 0.5, 'top': 1}  # Posisi gambar di atas
+                    # Label teks di bawah gambar
+                    Label:
+                        text: 'Beranda'
+                        font_size: 12
+                        size_hint: 1, 0.5  # Ukuran label disesuaikan
+                        color: 0, 0, 0, 1
+                        halign: 'center'
+                        valign: 'middle'
+                        text_size: self.size
+                        pos_hint: {'center_x': 0.5, 'y': 0}  # Posisi label di bawah
+                    # Tombol transparan menutupi gambar dan label
+                    Button:
+                        size_hint: 1, None
+                        height: 44
+                        pos_hint: {'x': 0, 'y': 0}  # Menempatkan tombol di bagian bawah
+                        background_color: 0, 0, 0, 0  # Membuat tombol transparan agar gambar terlihat
+                        on_release: app.root.current = 'adm_beranda'
+                        canvas.before:
+                            Color:
+                                rgba: 0, 0, 0, 1  # Warna garis
+                            Line:
+                                points: self.x, self.y + self.height, self.x + self.width, self.y + self.height  # Garis di atas tombol
+                                width: 1.2  # Ketebalan garis
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint: (None, 1)
+                width: self.parent.width / 4 
+                FloatLayout:
+                    # Gambar di bagian atas
+                    Image:
+                        source: 'assets/image/icon_penggunaan.png'
+                        size_hint: 1, 0.5  # Ukuran gambar disesuaikan
+                        allow_stretch: True
+                        keep_ratio: True
+                        pos_hint: {'center_x': 0.5, 'top': 1}  # Posisi gambar di atas
+
+                    # Label teks di bawah gambar
+                    Label:
+                        text: 'Penggunaan'
+                        font_size: 12
+                        size_hint: 1, 0.5  # Ukuran label disesuaikan
+                        color: 0, 0, 0, 1
+                        halign: 'center'
+                        valign: 'middle'
+                        text_size: self.size
+                        pos_hint: {'center_x': 0.5, 'y': 0}  # Posisi label di bawah
+
+                    # Tombol transparan menutupi gambar dan label
+                    Button:
+                        size_hint: 1, None
+                        height: 44
+                        pos_hint: {'x': 0, 'y': 0}  # Menempatkan tombol di bagian bawah
+                        background_color: 0, 0, 0, 0  # Membuat tombol transparan agar gambar terlihat
+                        on_release: app.root.current = 'adm_penggunaan'
+
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint: (None, 1)
+                width: self.parent.width / 4 
+                FloatLayout:
+                    # Gambar di bagian atas
+                    Image:
+                        source: 'assets/image/icon_kemajuan.png'
+                        size_hint: 1, 0.5  # Ukuran gambar disesuaikan
+                        allow_stretch: True
+                        keep_ratio: True
+                        pos_hint: {'center_x': 0.5, 'top': 1}  # Posisi gambar di atas
+
+                    # Label teks di bawah gambar
+                    Label:
+                        text: 'Kemajuan'
+                        font_size: 12
+                        size_hint: 1, 0.5  # Ukuran label disesuaikan
+                        color: 0, 0, 0, 1
+                        halign: 'center'
+                        valign: 'middle'
+                        text_size: self.size
+                        pos_hint: {'center_x': 0.5, 'y': 0}  # Posisi label di bawah
+
+                    # Tombol transparan menutupi gambar dan label
+                    Button:
+                        size_hint: 1, None
+                        height: 44
+                        pos_hint: {'x': 0, 'y': 0}  # Menempatkan tombol di bagian bawah
+                        background_color: 0, 0, 0, 0  # Membuat tombol transparan agar gambar terlihat
+                        on_release: app.root.current = 'adm_kemajuan'
+
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint: (None, 1)
+                width: self.parent.width / 4 
+                FloatLayout:
+                    # Gambar di bagian atas
+                    Image:
+                        source: 'assets/image/icon_profil.png'
+                        size_hint: 1, 0.5  # Ukuran gambar disesuaikan
+                        allow_stretch: True
+                        keep_ratio: True
+                        pos_hint: {'center_x': 0.5, 'top': 1}  # Posisi gambar di atas
+
+                    # Label teks di bawah gambar
+                    Label:
+                        text: 'Profil'
+                        font_size: 12
+                        size_hint: 1, 0.5  # Ukuran label disesuaikan
+                        color: 0, 0, 0, 1
+                        halign: 'center'
+                        valign: 'middle'
+                        text_size: self.size
+                        pos_hint: {'center_x': 0.5, 'y': 0}  # Posisi label di bawah
+
+                    # Tombol transparan menutupi gambar dan label
+                    Button:
+                        size_hint: 1, None
+                        height: 44
+                        pos_hint: {'x': 0, 'y': 0}  # Menempatkan tombol di bagian bawah
+                        background_color: 0, 0, 0, 0  # Membuat tombol transparan agar gambar terlihat
+                        on_release: app.root.current = 'adm_profil'
