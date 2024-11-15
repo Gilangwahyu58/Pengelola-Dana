@@ -302,13 +302,24 @@ class Penggunaan:
             print(f"Deleted usage data for title: {title}")
         else:
             print(f"Data tidak ditemukan untuk judul: {title}")
-
+    
     @staticmethod
-    def save_keuangan_data(nama_desa, financial_amount):
+    def save_keuangan_data(nama_desa, tambahan_keuangan):
         """Simpan data keuangan desa ke Firebase."""
         try:
+            # Ambil data keuangan yang ada
+            current_data = AdminLogin.db.child("keuangan").child(nama_desa).get()
+            
+            if current_data.val():
+                # Jika data sudah ada, tambahkan ke total
+                total_keuangan = current_data.val().get('total_keuangan', 0) + tambahan_keuangan
+            else:
+                # Jika tidak ada data, set total keuangan sama dengan tambahan
+                total_keuangan = tambahan_keuangan
+            
+            # Simpan data ke Firebase
             AdminLogin.db.child("keuangan").child(nama_desa).set({
-                "financial_amount": financial_amount
+                "total_keuangan": total_keuangan
             })
             print("Data keuangan berhasil disimpan.")
         except Exception as e:
